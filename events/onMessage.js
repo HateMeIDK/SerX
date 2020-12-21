@@ -17,6 +17,23 @@ module.exports = {
         let command = Bot.commands.get(commandName) || Bot.commands.find(command => command.aliases && command.aliases.includes(commandName));
         if(!command)return;
         if(command.ownerOnly && message.author.id != process.env.BOT_DEVELOPER)return;
-        command.execute(message, args);
+	let permissions = message.channel.permissionsFor(message.member);
+	let required = command.bot_perms || [];
+	required.unshift("EMBED_LINKS");
+	for(let i in required){
+	    let permission = required[i];
+		if(!permissions.has(permission)){
+		    return await message.channel.send(Bot.textdata[guild.locale].no_bot_perms.replace(/{{permission}}/giu, permission));
+		}
+	}
+	required = command.user_perms || [];
+	permissions = message.channel.permissionsFor(message.member);
+	for(let i in required){
+	    let permission = required[i];
+	    if(!permissions.has(permission)){
+		return await message.channel.send(Bot.textdata[guild.locale].no_user_perms.replace(/{{permission}}/giu, permission));
+	    }
+	}
+	command.execute(message, args);
     }
 }

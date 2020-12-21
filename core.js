@@ -1,5 +1,5 @@
 const { Collection, Client } = require("discord.js");
-const { readdirSync } = require("fs");
+const { readdirSync, readFileSync } = require("fs");
 
 module.exports = {
     Core: class Core {
@@ -15,6 +15,7 @@ module.exports = {
             this.client = new Client();
             this.models = {};
             this.mongoose = require("mongoose");
+	    this.textdata = {};
             this.setupHandlers();
             this.setupDatabase();
         }
@@ -35,6 +36,10 @@ module.exports = {
                 this.models[instance.constructor.modelName] = model;
                 console.log(`Подгружена модель "${instance.constructor.modelName}".`);
             });
+	    readdirSync("./locales/").filter(file => file.endsWith(".json")).forEach(localefile=>{
+		let locale = JSON.parse(readFileSync(`./locales/${localefile}`));
+		this.textdata[localefile.split(".")[0]] = locale;
+	    });
         }
         setupDatabase(){
             this.mongoose.connect(this.options.mongodb_url, { useNewUrlParser: true, useUnifiedTopology: true });
