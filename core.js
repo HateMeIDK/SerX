@@ -14,6 +14,7 @@ module.exports = {
             this.commands = new Collection();
             this.client = new Client();
             this.models = {};
+            this.xpgain_cd = {};
             this.mongoose = require("mongoose");
 	    this.textdata = {};
             this.setupHandlers();
@@ -36,10 +37,10 @@ module.exports = {
                 this.models[instance.constructor.modelName] = model;
                 console.log(`Подгружена модель "${instance.constructor.modelName}".`);
             });
-	    readdirSync("./locales/").filter(file => file.endsWith(".json")).forEach(localefile=>{
-		let locale = JSON.parse(readFileSync(`./locales/${localefile}`));
-		this.textdata[localefile.split(".")[0]] = locale;
-	    });
+	        readdirSync("./locales/").filter(file => file.endsWith(".json")).forEach(localefile=>{
+		        let locale = JSON.parse(readFileSync(`./locales/${localefile}`));
+		        this.textdata[localefile.split(".")[0]] = locale;
+	        });
         }
         setupDatabase(){
             this.mongoose.connect(this.options.mongodb_url, { useNewUrlParser: true, useUnifiedTopology: true });
