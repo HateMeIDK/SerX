@@ -24,5 +24,19 @@
 	"colorify_usage": "<@упоминание/ID/ник/URL> <hex-цвет> - колоризовать изображение в заданный цвет.",
 	"color_usage": "<hex-цвет> - получить информацию о данном цвете.",
 	"color_name_title": "Цвет - {{color}}:",
-	"supreme_usage": "<текст из английских букв и пробелов> - создать логотип по типу Supreme."
+	"supreme_usage": "<текст из английских букв и пробелов> - создать логотип по типу Supreme.",
+	"default_reason": "Не указана.",
+	"not_bannable": "Бот не может забанить этого участника.",
+	"you_are_banned": "Вы были забанены в {{guild}}:",
+	"member_was_banned": "Участник {{member}} был забанен в {{guild}}:",
+	"ban_message": "Модератор: {{moderator}}(ID: {{moderator_id}}).\nПричина: {{reason}}",
+	"not_kickable": "Бот не может выгнать этого участника.",
+	"member_was_kicked": "Участник {{member}} был забанен в {{guild}}:",
+	"you_are_kicked": "Вы были выгнаны из {{guild}}:",
+	"kick_message": "Модератор: {{moderator}}(ID: {{moderator_id}}).\nПричина: {{reason}}",
+	"unban_usage": "Использование: <ID> - разбанить пользователя.",
+	"ban_not_found": "Бан не найден.",
+	"cannot_unban": "Бот не может разбанить пользователя.",
+	"member_unbanned_title": "Учаник {{member}} разбанен:",
+	"member_unbanned": "Модератор: {{moderator}}(ID: {{moderator_id}}).\nПричина бана: {{ban_reason}}"
 }

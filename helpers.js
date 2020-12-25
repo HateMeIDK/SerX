@@ -13,7 +13,7 @@ module.exports = {
     },
     embedder(object){
         object.embed.footer = {
-            text: "SerX Alpha v0.2"
+            text: "SerX Alpha v0.2.3"
         };
         return object;
     },
