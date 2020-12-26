@@ -13,7 +13,7 @@ module.exports = {
     },
     embedder(object){
         object.embed.footer = {
-            text: "SerX Alpha v0.2.3"
+            text: "SerX Alpha v0.3"
         };
         return object;
     },
@@ -138,5 +138,42 @@ module.exports = {
                 return;
             }
         });
+    },
+    async processMute(mute, final = false){
+        if(mute.timestamp_end == Infinity)return;
+        if(final){
+            try {
+                let guild = Bot.client.guilds.cache.get(mute.guild_id);
+                if(!guild)throw new Error("Guild not found.");
+                let channel = guild.channels.cache.get(mute.info_channel);
+                if(!channel)throw new Error("Channel not found.");
+                let member = guild.members.cache.get(mute.user_id);
+                if(!member)throw new Error("Member not found.");
+                let guild_ = await module.exports.getGuild(mute.guild_id);
+                let role = guild.roles.cache.get(guild_.mute_role);
+                if(!role)throw new Error("Mute role not found.");
+                await member.roles.remove(role);
+                await channel.send(module.exports.embedder({
+                    embed: {
+                        title: Bot.textdata[guild_.locale].member_unmuted.replace(/\{\{member\}\}/giu, member.user.tag),
+                        description: Bot.textdata[guild_.locale].member_unmuted_description
+                        .replace(/\{\{moderator\}\}/giu, guild.members.cache.get(mute.moderator_id) || Bot.textdata[guild_.locale].unknown_user)
+                        .replace(/\{\{moderator_id\}\}/giu, mute.moderator_id)
+                        .replace(/\{\{reason\}\}/giu, mute.reason),
+                        color: 0x00FF00
+                    }
+                }));
+                await Bot.models.Mute.deleteMany({_id: mute._id.toString()});
+            }catch(e){}
+        }else if(mute.timestamp_end - Date.now() <= 60000){
+            setTimeout(module.exports.processMute, mute.timestamp_end - Date.now(), mute, true);
+        }
+    },
+    async processAllMutes(){
+        let mutes = await Bot.models.Mute.find({});
+        for(let i in mutes){
+            let mute = mutes[i];
+            await module.exports.processMute(mute);
+        }
     }
 }

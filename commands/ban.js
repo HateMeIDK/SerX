@@ -16,7 +16,7 @@ module.exports = {
         if((message.author.id != message.guild.owner.id) && (target.roles.highest.position >= message.member.roles.highest.position || target.id == message.guild.owner.id)){
             return await message.channel.send(errorEmbed(guild.locale, "you_is_lower"));
         }
-        let reason = args.slice(2).join(" ") || Bot.textdata[guild.locale].default_reason;
+        let reason = args.slice(1).join(" ") || Bot.textdata[guild.locale].default_reason;
         if(!target.bannable){
             return await message.channel.send(errorEmbed(guild.locale, "not_bannable"));
         }

@@ -1,5 +1,6 @@
 const { Collection, Client } = require("discord.js");
 const { readdirSync, readFileSync } = require("fs");
+const { processAllMutes } = require("./helpers");
 
 module.exports = {
     Core: class Core {
@@ -46,6 +47,7 @@ module.exports = {
             this.mongoose.connect(this.options.mongodb_url, { useNewUrlParser: true, useUnifiedTopology: true });
             this.mongoose.connection.on("connected", ()=>{
                 console.log("[+] Бот подключился к базе данных.");
+                setInterval(processAllMutes, 10000);
             });
         }
         launch(){
