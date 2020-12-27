@@ -13,7 +13,7 @@ module.exports = {
     },
     embedder(object){
         object.embed.footer = {
-            text: "SerX Alpha v0.3"
+            text: "SerX Alpha v0.4"
         };
         return object;
     },
@@ -175,5 +175,15 @@ module.exports = {
             let mute = mutes[i];
             await module.exports.processMute(mute);
         }
+    },
+    validateAndExtractEmoji(emoji){
+        let twemoji = require("twemoji");
+        if(twemoji.parse(emoji) != emoji){
+            return emoji;
+        }
+        if(/^<a?:(\w+):(\d+)>$/g.test(emoji)){
+            return emoji.split(/<a?:/giu)[1].split(":")[1].split(">")[0];
+        }
+        return null;
     }
 }

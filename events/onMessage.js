@@ -3,6 +3,7 @@ const { getGuild, getUser, getNeededXP } = require("../helpers");
 module.exports = {
     trigger: "message",
     handler: async(message)=>{
+        if(message.partial)message = await message.fetch();
         if(message.channel.type == "dm" || message.author.bot || !message.content)return;
         let guild = await getGuild(message.guild.id);
         if(!guild){

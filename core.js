@@ -13,7 +13,9 @@ module.exports = {
                 throw new Error("Строка для подключения к MongoDB не указана.");
             }
             this.commands = new Collection();
-            this.client = new Client();
+            this.client = new Client({
+                partials: ["MESSAGE", "CHANNEL", "REACTION"]
+            });
             this.models = {};
             this.xpgain_cd = {};
             this.mongoose = require("mongoose");
