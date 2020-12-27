@@ -1,4 +1,4 @@
-# Kinda simple discord bot which you can use as reference.
+# Kinda simple discord bot.
 ## What does it have?
 - Levelling system with image rank cards.  
 - Some image commands.
